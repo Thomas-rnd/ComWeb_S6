@@ -97,4 +97,9 @@ border-right: 1px solid grey;
 height: 100%;
 }
 
+.centre
+{
+text-align: center;
+}
+
 /* Credit to https://bootsnipp.com/snippets/M56El  */
