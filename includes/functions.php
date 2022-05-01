@@ -6,7 +6,7 @@ function getDb() {
     /* $server = "localhost";
     $username = "mymovies_user";
     $password = "secret";
-    $db = "mymovies"; */
+    $db = "histoire"; */
     
     // Deployment on Heroku with ClearDB for MySQL
     $url = parse_url(getenv("CLEARDB_DATABASE_URL"));
