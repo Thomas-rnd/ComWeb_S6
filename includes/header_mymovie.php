@@ -13,7 +13,7 @@
         <div class="collapse navbar-collapse" id="navbar-collapse-target">
             <?php if (isUserConnected()) { ?>
                 <ul class="nav navbar-nav">
-                    <li><a href="movie_add.php">Ajouter un film</a></li>
+                    <li><a href="histoire_add.php">Ajouter un film</a></li>
                 </ul>
             <?php } ?>
             <ul class="nav navbar-nav navbar-right">
@@ -29,7 +29,7 @@
                 <?php } else { ?>
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                            <span class="glyphicon glyphicon-user"></span> Non connecté <b class="caret"></b>
+                            <span class="glyphicon glyphicon-user"></span>Non connecté<b class="caret"></b>
                         </a>
                         <ul class="dropdown-menu">
                             <li><a href="login.php">Se connecter</a></li>
