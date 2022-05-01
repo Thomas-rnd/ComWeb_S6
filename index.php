@@ -3,7 +3,7 @@ require_once "includes/functions.php";
 session_start();
 
 // Retrieve all movies
-$movies = getDb()->query('select * from movie order by mov_id desc'); 
+$histoires = getDb()->query('select * from histoire order by HIST_NUM desc'); 
 ?>
 
 <!doctype html>
