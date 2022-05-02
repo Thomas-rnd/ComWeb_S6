@@ -34,10 +34,15 @@ require_once "includes/head.php";
                         $usr = isUserConnected();
                         $stmt = getDb()->prepare('select * from user where USR_LOGIN=?');
                         $stmt->execute(array($usr));
-                        $user = $stmt->fetch();
-                        $usrId = $user['AVANCEMENT'] ?>
-                        <p><a class="lancerHistoire" href="histoire_read.php?histId=<?=$histId?>usrAvancement=<?=$usrAvancement?>">Lancer l'histoire</a></p>
+                        $user = $stmt->fetch();          
+                        $usrId = $user['USR_ID'];
+                        $tmp = getDb()->prepare('select * from statistiques where USR_ID=? and HIST_NUM=?');
+                        $tmp->execute(array($usrId,$histoire['HIST_NUM']));
+                        $statistiques = $tmp->fetch();          
+                        $avancement = $statistiques['AVANCEMENT'];?>
+                        <p><a class="lancerHistoire" href="histoire_read.php?histId=<?=$histId?>usrAvancement=<?=$avancement?>">Lancer l'histoire</a></p>
                     <?php } ?>
+                    <?=$usr?>
                 </h2>
             </div>
         </div>
