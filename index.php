@@ -2,7 +2,7 @@
 require_once "includes/functions.php";
 session_start();
 
-// Retrieve all movies
+// return al history
 $histoires = getDb()->query('select * from histoire order by HIST_NUM desc'); 
 ?>
 
@@ -17,8 +17,8 @@ $histoires = getDb()->query('select * from histoire order by HIST_NUM desc');
 
         <?php foreach ($histoires as $histoire) { ?>
             <article>
-                <h3><a class="titreHistoire" href="histoire.php?id=<?= $histoire['HIST_NUM'] ?>"><?= $histoire['HIST_TITRE'] ?></a></h3>
-                <p class="synopsisHistoire"><?= $histoire['HIST_RESUME'] ?></p>
+                <h3><a class="titreHistoire" href="histoire.php?id=<?=$histoire['HIST_NUM']?>"><?=$histoire['HIST_TITRE']?></a></h3>
+                <p class="synopsisHistoire"><?=$histoire['HIST_RESUME']?></p>
             </article>
         <?php } ?>
 
