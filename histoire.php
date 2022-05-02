@@ -29,6 +29,15 @@ require_once "includes/head.php";
                     <h2><?= $histoire['HIST_TITRE'] ?></h2>
                     <p><?= $histoire['HIST_AUTEUR'] ?>, <?= $histoire['HIST_DATE'] ?></p>
                     <p><small><?= $histoire['HIST_RESUME'] ?></small></p>
+                    <?php 
+                    if (isUserConnected()) { 
+                        $usr = isUserConnected();
+                        $stmt = getDb()->prepare('select * from user where USR_LOGIN=?');
+                        $stmt->execute(array($usr));
+                        $user = $stmt->fetch();
+                        $usrId = $user['AVANCEMENT'] ?>
+                        <p><a class="lancerHistoire" href="histoire_read.php?histId=<?=$histId?>usrAvancement=<?=$usrAvancement?>">Lancer l'histoire</a></p>
+                    <?php } ?>
                 </h2>
             </div>
         </div>
