@@ -31,9 +31,8 @@ require_once "includes/head.php";
                     <p><small><?= $histoire['HIST_RESUME'] ?></small></p>
                     <?php 
                     if (isUserConnected()) { 
-                        $usr = isUserConnected();
                         $stmt = getDb()->prepare('select * from user where USR_LOGIN=?');
-                        $stmt->execute(array($usr));
+                        $stmt->execute(array($_SESSION['login']));
                         $user = $stmt->fetch();          
                         $usrId = $user['USR_ID'];
                         $tmp = getDb()->prepare('select * from statistiques where USR_ID=? and HIST_NUM=?');
@@ -42,7 +41,6 @@ require_once "includes/head.php";
                         $avancement = $statistiques['AVANCEMENT'];?>
                         <p><a class="lancerHistoire" href="histoire_read.php?histId=<?=$histId?>usrAvancement=<?=$avancement?>">Lancer l'histoire</a></p>
                     <?php } ?>
-                    <?=$usr?>
                 </h2>
             </div>
         </div>
