@@ -10,7 +10,7 @@ session_start();
 $histId = $_GET['histId'];
 $usrAvancement = $_GET['usrAvancement'];
 $stmt = getDb()->prepare('select * from narration where HIST_NUM=? and NARR_INDEX=?');
-$stmt->execute(array($histId,$usrAvancement));
+$stmt->execute(array($histId, $usrAvancement));
 $narration = $stmt->fetch();
 
 $titre = getDb()->prepare('select * from histoire where HIST_NUM=?');
@@ -30,11 +30,11 @@ require_once "includes/head.php";
                     <h2><?= $histoire['HIST_TITRE']?></h2>
                     <p><?= $narration['NARR_TEXTE'] ?></p>
                     <?php
-                    $choix = getDb()->prepare('select * from choix where NARR_INDEX=?');
-                    $choix->execute(array($histId));
-                    $histoire = $choix->fetch();
+                    $stmt = getDb()->prepare('select * from choix where NARR_INDEX=?');
+                    $stmt->execute(array($histId));
+                    $choix = $stmt->fetch();
                     foreach ($choix as $numChoix) { ?>
-                        <a class="btn btn-secondary" href="histoire_read.php?histId=<?=$histoire['HIST_NUM']?>usrAvancement=<?=0?>"><?=$numChoix['CH_TEXTE']?></a>
+                        <a class="btn btn-secondary" href="histoire_read.php?histId=<?=$histoire['HIST_NUM']?>usrAvancement=<?=$numChoix['CH_INDEX']?>"><?=$numChoix['CH_TEXTE']?></a>
                     <?php } ?>
                 </h2>
             </div>
