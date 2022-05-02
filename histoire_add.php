@@ -48,14 +48,13 @@ if (isUserConnected()) {
               <div class="form-group">
                 <label class="col-sm-4 control-label">Titre</label>
                 <div class="col-sm-6">
-                  <input type="text" name="titre" value="<?= $movieTitle ?>" class="form-control" placeholder="Entrez le titre de votre histoire" required autofocus>
+                  <input type="text" name="titre" class="form-control" placeholder="Entrez le titre de votre histoire" required autofocus>
                 </div>
               </div>
               <div class="form-group">
                 <label class="col-sm-4 control-label">Description courte</label>
                 <div class="col-sm-6">
-                  <textarea name="shortDescription" class="form-control" placeholder="Entrez sa description courte" required>
-                    <?= $movieShortDescription ?>
+                  <textarea name="shortDescription" class="form-control" rows="3" placeholder="Entrez sa description courte" required>
                   </textarea>
                 </div>
               </div>
@@ -63,14 +62,13 @@ if (isUserConnected()) {
                 <label class="col-sm-4 control-label">Description longue</label>
                 <div class="col-sm-6">
                   <textarea name="longDescription" class="form-control" rows="6" placeholder="Entrez sa description longue" required>
-                    <?= $movieLongDescription ?>
                   </textarea>
                 </div>
               </div>
               <div class="form-group">
                 <label class="col-sm-4 control-label">Auteur</label>
                 <div class="col-sm-6">
-                  <input type="text" name="director" value="<?= $movieDirector ?>" class="form-control" placeholder="Entrez le nom de son auteur" required>
+                  <input type="text" name="director" class="form-control" placeholder="Entrez le nom de son auteur" required>
                 </div>
               </div>
               <div class="form-group">
