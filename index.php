@@ -24,7 +24,6 @@ $histoires = getDb()->query('select * from histoire order by HIST_NUM desc');
 
         <?php require_once "includes/footer.php"; ?>
     </div>
-
     <?php require_once "includes/scripts.php"; ?>
 </body>
 
