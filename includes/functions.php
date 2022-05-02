@@ -14,7 +14,8 @@ function getDb() {
     $server = $url["host"];
     $username = $url["user"];
     $password = $url["pass"];
-    $db = substr($url["path"], 1);*/
+    $db = substr($url["path"], 1);
+    */
     
     return new PDO("mysql:host=$server;dbname=$db;charset=utf8", "$username", "$password",
     array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION));
