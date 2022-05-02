@@ -1,18 +1,18 @@
 <?php
 require_once "includes/functions.php";
 session_start();
-
-$histId = $_GET['histId'];
-$usrAvancement = $_GET['usrAvancement'];
-$stmt = getDb()->prepare('select * from narration where HIST_NUM=? and NARR_INDEX=?');
-$stmt->execute(array($histId,$usrAvancement));
-$narration = $stmt->fetch();
 ?>
 
 <!doctype html>
 <html>
 
 <?php 
+$histId = $_GET['histId'];
+$usrAvancement = $_GET['usrAvancement'];
+$stmt = getDb()->prepare('select * from narration where HIST_NUM=? and NARR_INDEX=?');
+$stmt->execute(array($histId,$usrAvancement));
+$narration = $stmt->fetch();
+
 $titre = getDb()->prepare('select * from histoire where HIST_NUM=?');
 $titre->execute(array($histId));
 $histoire = $titre->fetch();
