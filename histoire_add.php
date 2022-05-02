@@ -4,13 +4,12 @@ session_start();
 
 if (isUserConnected()) {
     
-    if (isset($_POST['title'])) {
+    if (isset($_POST['titre'])) {
         // the movie form has been posted : retrieve movie parameters
-        $title = escape($_POST['title']);
-        $shortDescription = escape($_POST['shortDescription']);
-        $longDescription = escape($_POST['longDescription']);
-        $director = escape($_POST['director']);
-        $year = escape($_POST['year']);
+        $titre = escape($_POST['titre']);
+        $resume = escape($_POST['resume']);
+        $auteur = escape($_POST['auteur']);
+        $date = escape($_POST['date']);
         
         $tmpFile = $_FILES['image']['tmp_name'];
         if (is_uploaded_file($tmpFile)) {
@@ -21,11 +20,11 @@ if (isUserConnected()) {
         }
         
         // insert movie into BD
-        $stmt = getDb()->prepare('insert into movie
-        (mov_title, mov_description_short, mov_description_long, mov_director, mov_year, mov_image)
-        values (?, ?, ?, ?, ?, ?)');
-        $stmt->execute(array($title, $shortDescription, $longDescription,
-        $director, $year, $image));
+        $stmt = getDb()->prepare('insert into histoire
+        (HIST_TITRE, HIST_RESUME, HIST_AUTEUR, HIST_DATE, HIST_IMAGE)
+        values (?, ?, ?, ?, ?)');
+        $stmt->execute(array($titre, $resume, $auteur,
+        $date, $image));
         redirect("index.php");
     }
     ?>
@@ -34,7 +33,7 @@ if (isUserConnected()) {
   <html>
 
   <?php
-    $pageTitle = "Ajout d'un film";
+    $pageTitle = "Ajout d'une histoire";
     require_once "includes/head.php";
     ?>
 
@@ -42,14 +41,14 @@ if (isUserConnected()) {
       <div class="container">
         <?php require_once "includes/header.php"; ?>
 
-          <h2 class="text-center">Ajout d'un film</h2>
+          <h2 class="text-center">Ajout d'une histoire</h2>
           <div class="well">
-            <form class="form-horizontal" role="form" enctype="multipart/form-data" action="movie_add.php" method="post">
+            <form class="form-horizontal" role="form" enctype="multipart/form-data" action="histoire_add.php" method="post">
               <input type="hidden" name="id" value="<?= $movieId ?>">
               <div class="form-group">
                 <label class="col-sm-4 control-label">Titre</label>
                 <div class="col-sm-6">
-                  <input type="text" name="title" value="<?= $movieTitle ?>" class="form-control" placeholder="Entrez le titre du film" required autofocus>
+                  <input type="text" name="titre" value="<?= $movieTitle ?>" class="form-control" placeholder="Entrez le titre de votre histoire" required autofocus>
                 </div>
               </div>
               <div class="form-group">
@@ -69,13 +68,13 @@ if (isUserConnected()) {
                 </div>
               </div>
               <div class="form-group">
-                <label class="col-sm-4 control-label">Réalisateur</label>
+                <label class="col-sm-4 control-label">Auteur</label>
                 <div class="col-sm-6">
-                  <input type="text" name="director" value="<?= $movieDirector ?>" class="form-control" placeholder="Entrez son réalisateur" required>
+                  <input type="text" name="director" value="<?= $movieDirector ?>" class="form-control" placeholder="Entrez le nom de son auteur" required>
                 </div>
               </div>
               <div class="form-group">
-                <label class="col-sm-4 control-label">Année de sortie</label>
+                <label class="col-sm-4 control-label">Année</label>
                 <div class="col-sm-4">
                   <input type="number" name="year" value="<?= $movieYear ?>" class="form-control" placeholder="Entrez son année de sortie" required>
                 </div>
