@@ -39,7 +39,9 @@ require_once "includes/head.php";
                         $tmp->execute(array($usrId,$histoire['HIST_NUM']));
                         $statistiques = $tmp->fetch();          
                         $avancement = $statistiques['AVANCEMENT'];?>
-                        <p><a class="lancerHistoire" href="histoire_read.php?histId=<?=$histId?>usrAvancement=<?=$avancement?>">Lancer l'histoire</a></p>
+                        <p>
+                            <a class="lancerHistoire" href="histoire_read.php?histId=<?=$histId?>&usrAvancement=<?=$avancement?>">Lancer l'histoire</a>
+                        </p>
                     <?php } ?>
                 </h2>
             </div>
