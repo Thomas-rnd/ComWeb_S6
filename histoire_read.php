@@ -34,9 +34,10 @@ require_once "includes/head.php";
                     $stmt->execute(array($histId));
                     $choix = $stmt->fetch();
                     foreach ($choix as $numChoix) { ?>
-                        <a class="btn btn-secondary" href="histoire_read.php?histId=<?=$histoire['HIST_NUM']?>usrAvancement=<?=$numChoix['CH_INDEX']?>"><?=$numChoix['CH_TEXTE']?></a>
-                    <?php } ?>
-                </h2>
+                        <p>
+                            <a href="histoire_read.php?histId=<?=$histoire['HIST_NUM']?>&usrAvancement=<?=$numChoix['CH_INDEX']?>"><?php $numChoix['CH_TEXTE'] ?></a>
+                        </p>
+                    <?php }; ?>
             </div>
         </div>
 
