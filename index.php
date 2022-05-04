@@ -2,7 +2,7 @@
 require_once "includes/functions.php";
 session_start();
 
-// return al history
+// return all history
 $histoires = getDb()->query('select * from histoire order by HIST_NUM desc'); 
 ?>
 
