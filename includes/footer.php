@@ -1,3 +1,3 @@
-<footer class="footer">
-    Construit avec ❤ par les enseignants de l'<a href="https://www.ensc.fr">ENSC</a>.
+<footer class="mx-auto footer">
+    Construit avec ❤ par LEGER Sébastien et RENAUD Thomas</a>.
 </footer>
