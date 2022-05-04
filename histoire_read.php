@@ -26,19 +26,19 @@ require_once "includes/head.php";
     <div class="container">
         <?php require_once "includes/header.php"; ?>
         <div class="jumbotron">
+            <h2><?= $histoire['HIST_TITRE']?></h2>
+            <p><?= $narration['NARR_TEXTE'] ?></p>
+            <?php 
+            $choix = getDb()->prepare('select * from choix where NARR_INDEX=?');
+            $choix->execute(array($usrAvancement));?>
             <div class="row">
-                <div class="col-md-7 col-sm-5">
-                    <h2><?= $histoire['HIST_TITRE']?></h2>
-                    <p><?= $narration['NARR_TEXTE'] ?></p>
-                    <?php 
-                    $choix = getDb()->prepare('select * from choix where NARR_INDEX=?');
-                    $choix->execute(array($usrAvancement));
-                    while($numChoix = $choix->fetch()) 
-                    { ?>
+                <?php while($numChoix = $choix->fetch()) 
+                { ?>
+                    <div class="col-sm">
                         <a class="lancerHistoire" href="histoire_read.php?histId=<?=$histId?>&usrAvancement=<?=$numChoix['CH_INDEX']?>"><?=$numChoix['CH_TEXTE'] ?></a>
-                    <?php } ?>
-                </div>
-            </div>
+                    </div>
+                <?php } ?>
+            </div>         
         </div>
         <?php require_once "includes/footer.php"; ?>
     </div>
