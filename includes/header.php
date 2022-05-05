@@ -13,7 +13,8 @@
         <div class="collapse navbar-collapse" id="navbar-collapse-target">
             <?php if (isUserConnected()) { ?>
                 <ul class="nav navbar-nav">
-                    <li><a href="histoire_add.php">Ajouter un film</a></li>
+                    <li><a href="histoire_add.php">Ajouter une histoire</a></li>
+                    <li><a href="content_add.php">Ajouter une narration</a></li>
                 </ul>
             <?php } ?>
             <ul class="nav navbar-nav navbar-right">
