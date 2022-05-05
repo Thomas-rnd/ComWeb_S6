@@ -5,21 +5,21 @@ session_start();
 if (isUserConnected()) {
     
     if (isset($_POST['titre'])) {
-        // the movie form has been posted : retrieve movie parameters
+        // the history form has been posted : retrieve movie parameters
         $titre = escape($_POST['titre']);
-        $resume = escape($_POST['resume']);
+        $resume = escape($_POST['shortDescription']);
         $auteur = escape($_POST['auteur']);
         $date = escape($_POST['date']);
         
         $tmpFile = $_FILES['image']['tmp_name'];
         if (is_uploaded_file($tmpFile)) {
-            // upload movie image
+            // upload history image
             $image = basename($_FILES['image']['name']);
             $uploadedFile = "images/$image";
             move_uploaded_file($_FILES['image']['tmp_name'], $uploadedFile);
         }
         
-        // insert movie into BD
+        // insert history into BD
         $stmt = getDb()->prepare('insert into histoire
         (HIST_TITRE, HIST_RESUME, HIST_AUTEUR, HIST_DATE, HIST_IMAGE)
         values (?, ?, ?, ?, ?)');
@@ -59,22 +59,15 @@ if (isUserConnected()) {
                 </div>
               </div>
               <div class="form-group">
-                <label class="col-sm-4 control-label">Description longue</label>
-                <div class="col-sm-6">
-                  <textarea name="longDescription" class="form-control" rows="6" placeholder="Entrez sa description longue" required>
-                  </textarea>
-                </div>
-              </div>
-              <div class="form-group">
                 <label class="col-sm-4 control-label">Auteur</label>
                 <div class="col-sm-6">
-                  <input type="text" name="director" class="form-control" placeholder="Entrez le nom de son auteur" required>
+                  <input type="text" name="auteur" class="form-control" placeholder="Entrez le nom de son auteur" required>
                 </div>
               </div>
               <div class="form-group">
-                <label class="col-sm-4 control-label">Année</label>
+                <label class="col-sm-4 control-label">Date</label>
                 <div class="col-sm-4">
-                  <input type="number" name="year" value="<?= $movieYear ?>" class="form-control" placeholder="Entrez son année de sortie" required>
+                  <input type="date" name="date" value="<?= $movieYear ?>" class="form-control" placeholder="Entrez son année de sortie" required>
                 </div>
               </div>
               <div class="form-group">
