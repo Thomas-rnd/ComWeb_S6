@@ -26,7 +26,7 @@ if (isUserConnected()) {
         $stmt->execute(array($titre, $resume, $auteur,
         $date, $image));
         redirect("index.php");
-    }
+    }}
     ?>
 
   <!doctype html>
@@ -91,13 +91,3 @@ if (isUserConnected()) {
     </body>
 
   </html>
-
-  <?php } else { ?>
-    <html>
-
-    <body>
-      <img src="https://sd.keepcalm-o-matic.co.uk/i/don-t-mess-with-me-bro.png" />
-    </body>
-
-    </html>
-    <?php } ?>
