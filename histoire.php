@@ -20,15 +20,12 @@ require_once "includes/head.php";
     <div class="container">
         <?php require_once "includes/header.php"; ?>
 
-        <div class="jumbotron">
-            <div class="row">
-                <div class="col-md-5 col-sm-7">
-                    <img class="img-responsive histImage" src="images/<?= $histoire['HIST_IMAGE'] ?>" title="<?= $histoire['HIST_TITRE'] ?>" />
-                </div>
-                <div class="col-md-7 col-sm-5">
-                    <h2><?= $histoire['HIST_TITRE'] ?></h2>
-                    <p><?= $histoire['HIST_AUTEUR'] ?>, <?= $histoire['HIST_DATE'] ?></p>
-                    <p><small><?= $histoire['HIST_RESUME'] ?></small></p>
+        <div class="card" style="width: 25rem;">
+            <img class="img-responsive histImage" src="images/<?= $histoire['HIST_IMAGE'] ?>" title="<?= $histoire['HIST_TITRE'] ?>" />
+                <div class="card-body">
+                    <h3 class="card-title"><?= $histoire['HIST_TITRE'] ?><?="," ?> <?= $histoire['HIST_AUTEUR'] ?> </h3>
+                    <h4 class="card-subtitle"><?= $histoire['HIST_DATE'] ?></h4>
+                    <p class = "card-text"><?= $histoire['HIST_RESUME'] ?></p>
                     <?php 
                     if (isUserConnected()) { 
                         $stmt = getDb()->prepare('select * from user where USR_LOGIN=?');
@@ -39,12 +36,12 @@ require_once "includes/head.php";
                         $tmp->execute(array($usrId,$histoire['HIST_NUM']));
                         $statistiques = $tmp->fetch();          
                         $avancement = $statistiques['AVANCEMENT'];?>
-                        <p>
-                            <a class="lancerHistoire" href="histoire_read.php?histId=<?=$histId?>&usrAvancement=<?=$avancement?>">Lancer l'histoire</a>
-                        </p>
+
+                        <div class = "position-absolute top-50 start-50 translate-middle" >
+                            <a class="btn btn-primary " href="histoire_read.php?histId=<?=$histId?>&usrAvancement=<?=$avancement?>">Lancer l'histoire</a>
+                        </div>
                     <?php } ?>
-                </h2>
-            </div>
+                </div>
         </div>
     </div>
 
