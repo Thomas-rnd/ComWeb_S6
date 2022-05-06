@@ -26,6 +26,15 @@ function isUserConnected() {
     return isset($_SESSION['login']);
 }
 
+// Check if the user is admin
+function isAdminConnected() {
+    if(isset($_SESSION['login']) && $_SESSION['login']=="correcteur_admin")
+    {
+        return true;
+    }
+    return false;
+}
+
 // Redirect to a URL
 function redirect($url) {
     header("Location: $url");
