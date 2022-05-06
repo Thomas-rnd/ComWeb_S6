@@ -9,6 +9,11 @@ $histoires = getDb()->query('select * from histoire order by HIST_NUM desc');
 <!doctype html>
 <html>
 
+<head>
+    <meta charset="utf-8">
+    <link href="css/style.css" rel="stylesheet">
+</head>
+
 <?php require_once "includes/head.php"; ?>
 
 <body>
