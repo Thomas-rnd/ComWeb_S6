@@ -8,7 +8,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="index.php"><span class="glyphicon glyphicon-film"></span> Histoire intéractive</a>
+            <a class="navbar-brand" href="index.php"><span class="glyphicon glyphicon-film"></span> Histoire interactive</a>
         </div>
         <div class="collapse navbar-collapse" id="navbar-collapse-target">
             <?php if (isAdminConnected()) { ?>
