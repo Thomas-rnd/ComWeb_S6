@@ -9,10 +9,10 @@ if (isUserConnected()) {
     $nbChoix = $_GET['nbChoix'];
     
     if (isset($_POST['choix'])) {
-        foreach($_POST['choix'] as $key => $value)
+        for($i=0;$i<count($_POST['choix']);$i++)
         {
-            $choix = $value;  
-            $indexChoix = escape($_POST['indexChoix');
+            $choix = escape($_POST['choix'][$i]);  
+            $indexChoix = escape($_POST['indexChoix'][$i]);
             
             // insert choice into BD
             $stmt = getDb()->prepare('insert into choix
