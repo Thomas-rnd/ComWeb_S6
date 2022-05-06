@@ -18,13 +18,10 @@ $histoires = getDb()->query('select * from histoire order by HIST_NUM desc');
 
 <body>
     <div class="container">
+        <div class= "page-header">
         <?php require_once "includes/header.php"; ?>
-<<<<<<< Updated upstream
+        </div>
             <div class="container">
-        <div class="d-flex">
-=======
->>>>>>> Stashed changes
-        <div class="container">
         <?php foreach ($histoires as $histoire) { ?>
             <article>
                 <h3><a class="titreHistoire" href="histoire.php?id=<?=$histoire['HIST_NUM']?>"><?=$histoire['HIST_TITRE']?></a></h3>
