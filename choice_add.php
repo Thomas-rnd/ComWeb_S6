@@ -9,13 +9,12 @@ if (isUserConnected()) {
     $nbChoix = $_GET['nbChoix'];
     
     if (isset($_POST['choix'])) {
-        for($i=0;$i<$nbChoix;$i++)
+        foreach($_POST['choix'] as $key => $value)
         {
-            $choix = escape($_POST['choix[]']);  
-            echo $choix;  
-            $indexChoix = escape($_POST['indexChoix[]');
+            $choix = $value;  
+            $indexChoix = escape($_POST['indexChoix');
             
-            // insert narration into BD
+            // insert choice into BD
             $stmt = getDb()->prepare('insert into choix
             (CH_TEXTE, CH_INDEX, NARR_INDEX, HIST_NUM)
             values (?, ?, ?, ?)');
