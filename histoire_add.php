@@ -40,8 +40,7 @@ if (isUserConnected()) {
           $stmt = getDb()->prepare('insert into statistique
           (USR_ID, HIST_NUM, AVANCEMENT, PV)
           values (?, ?, ?, ?, ?)');
-          $stmt->execute(array($i, $histoire['HIST_NUM'], 1,
-          3);
+          $stmt->execute(array($i, $histoire['HIST_NUM'], 1, 3));
         }
         redirect("index.php");
     }}

@@ -15,6 +15,7 @@
                 <ul class="nav navbar-nav">
                     <li><a href="histoire_add.php">Ajouter une histoire</a></li>
                     <li><a href="content_add.php">Ajouter une narration</a></li>
+                    <li><a href="bdd_modify.php">Modification histoire</a></li>
                 </ul>
             <?php } ?>
             <ul class="nav navbar-nav navbar-right">
