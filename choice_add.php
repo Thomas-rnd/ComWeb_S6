@@ -11,9 +11,9 @@ if (isUserConnected()) {
     if (isset($_POST['choix'])) {
         for($i=0;$i<$nbChoix;$i++)
         {
-            $choix = escape($_POST['choix_'.$i]);  
+            $choix = escape($_POST['choix[]']);  
             echo $choix;  
-            $indexChoix = escape($_POST['indexChoix_'.$i]);
+            $indexChoix = escape($_POST['indexChoix[]');
             
             // insert narration into BD
             $stmt = getDb()->prepare('insert into choix
@@ -43,14 +43,14 @@ if (isUserConnected()) {
                         <div class="form-group">
                             <label class="col-sm-auto">Choix : </label>
                             <div class="col-sm-6">
-                                <textarea name="choix_<?=$i?>" class="form-control" rows="3" placeholder="Définition du choix" required>
+                                <textarea name="choix[]" class="form-control" rows="3" placeholder="Définition du choix" required>
                                 </textarea>
                             </div>
                         </div>
                         <div class="form-group">
                             <label for="exampleSelect1" class="form-label mt-4">Index du choix : </label>
                             <div class="col-sm-6">
-                                <input type="number" name="indexChoix_<?=$i?>" class="form-control" placeholder="Entrez l'index de retour du choix" required>
+                                <input type="number" name="indexChoix[]" class="form-control" placeholder="Entrez l'index de retour du choix" required>
                             </div>
                         </div>
                     <?php } ?>
