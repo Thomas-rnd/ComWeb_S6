@@ -42,7 +42,7 @@ require_once "includes/head.php";
                 <?php while($numChoix = $choix->fetch()) 
                 { ?>
                     <div class="col-sm">
-                        <a class="m-auto" href="histoire_read.php?histId=<?=$histId?>&usrAvancement=<?=$numChoix['CH_INDEX']?>"><?=$numChoix['CH_TEXTE'] ?></a>
+                        <a class="m-auto btn btn-primary" href="histoire_read.php?histId=<?=$histId?>&usrAvancement=<?=$numChoix['CH_INDEX']?>"><?=$numChoix['CH_TEXTE'] ?></a>
                         </br></br>
                     </div>
                 <?php } ?>
