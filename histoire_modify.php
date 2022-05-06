@@ -70,20 +70,20 @@ if (isUserConnected()) {
               <div class="form-group">
                 <label class="col-sm-4 control-label">Titre</label>
                 <div class="col-sm-6">
-                  <input type="text" name="titre" class="form-control" placeholder="<?=$histoire['HIST_TITRE']?>" required autofocus>
+                  <input type="text" name="titre" class="form-control" value="<?=$histoire['HIST_TITRE']?>" required autofocus>
                 </div>
               </div>
               <div class="form-group">
                 <label class="col-sm-4 control-label">Description courte</label>
                 <div class="col-sm-6">
-                  <textarea name="shortDescription" class="form-control" rows="3" placeholder="<?=$histoire['HIST_RESUME']?>" required>
+                  <textarea name="shortDescription" class="form-control" rows="3" value="<?=$histoire['HIST_RESUME']?>" required>
                   </textarea>
                 </div>
               </div>
               <div class="form-group">
                 <label class="col-sm-4 control-label">Auteur</label>
                 <div class="col-sm-6">
-                  <input type="text" name="auteur" class="form-control" placeholder="<?=$histoire['HIST_AUTEUR']?>" required>
+                  <input type="text" name="auteur" class="form-control" value="<?=$histoire['HIST_AUTEUR']?>" required>
                 </div>
               </div>
               <div class="form-group">
@@ -95,7 +95,7 @@ if (isUserConnected()) {
               <div class="form-group">
                 <label class="col-sm-4 control-label">Image</label>
                 <div class="col-sm-4">
-                  <input type="file" name="image" placeholder = "<?=$histoire['HIST_IMAGE']?>"/>
+                  <input type="file" name="image" value="<?=$histoire['HIST_IMAGE']?>" required/>
                 </div>
               </div>
               <div class="form-group">
