@@ -11,7 +11,7 @@
             <a class="navbar-brand" href="index.php"><span class="glyphicon glyphicon-film"></span> Histoire intéractive</a>
         </div>
         <div class="collapse navbar-collapse" id="navbar-collapse-target">
-            <?php if (isUserConnected()) { ?>
+            <?php if (isAdminConnected()) { ?>
                 <ul class="nav navbar-nav">
                     <li><a href="histoire_add.php">Ajouter une histoire</a></li>
                     <li><a href="content_add.php">Ajouter une narration</a></li>
