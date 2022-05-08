@@ -50,6 +50,7 @@ require_once "includes/head.php";
                         <input type="password" name="password" class="form-control" placeholder="Entrez votre mot de passe" required>
                     </div>
                 </div>
+                <p class="message text-center">Pas de compte ? <a href="create_account.php">Se créer un compte</a></p>
                 <div class="form-group">
                     <div class="col-sm-6 col-sm-offset-3 col-md-4 col-md-offset-4">
                         <button type="submit" class="btn btn-default btn-primary"><span class="glyphicon glyphicon-log-in"></span> Se connecter</button>
