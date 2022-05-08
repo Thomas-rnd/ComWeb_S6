@@ -24,29 +24,17 @@ if (isUserConnected()) {
             move_uploaded_file($_FILES['image']['tmp_name'], $uploadedFile);
         }
         
-        // insert history into BD
-        $stmt = getDb()->prepare('insert into histoire
-        (HIST_TITRE, HIST_RESUME, HIST_AUTEUR, HIST_DATE, HIST_IMAGE)
-        values (?, ?, ?, ?, ?)');
-        $stmt->execute(array($titre, $resume, $auteur,
-        $date, $image));
-
-        // Initialisation avancement et pv des utilisateurs
-        $stmt = getDb()->prepare('select * from user');
-        $nb = $stmt->roxCount();
-        $stmt = getDb()->prepare('select * from histoire where
-        (HIST_TITRE, HIST_RESUME, HIST_AUTEUR, HIST_DATE, HIST_IMAGE)
-        values (?, ?, ?, ?, ?)');
-        $stmt->execute(array($titre, $resume, $auteur,
-        $date, $image));
-        $histoire = $stmt->fetch();
-        for($i=1;$i<=$nb;$i++)
-        {
-          $stmt = getDb()->prepare('insert into statistique
-          (USR_ID, HIST_NUM, AVANCEMENT, PV)
-          values (?, ?, ?, ?, ?)');
-          $stmt->execute(array($i, $histoire['HIST_NUM'], 1, 3));
-        }
+        $modify = getDb()->prepare("update histoire set HIST_TITRE=:titre, HIST_RESUME=:resume, 
+        HIST_AUTEUR=:auteur, HIST_DATE=:date, HIST_IMAGE=:image
+        where HIST_NUM=:histId");
+        $modify->execute(array(
+        'titre'=>$titre,
+        'resume'=>$resume,
+        'auteur'=>$auteur,
+        'date'=>$date,
+        'image'=>$image,
+        'histId'=>$histId));
+        
         redirect("index.php");
     }}
     ?>
@@ -65,7 +53,7 @@ if (isUserConnected()) {
 
           <h2 class="text-center">Modification Information</h2>
           <div class="well">
-            <form class="form-horizontal" role="form" enctype="multipart/form-data" action="histoire_add.php" method="post">
+            <form class="form-horizontal" role="form" enctype="multipart/form-data" action="histoire_modify.php?histId=<?=$histId?>" method="post">
               <input type="hidden" name="id" value="<?= $movieId ?>">
               <div class="form-group">
                 <label class="col-sm-4 control-label">Titre</label>
@@ -76,8 +64,7 @@ if (isUserConnected()) {
               <div class="form-group">
                 <label class="col-sm-4 control-label">Description courte</label>
                 <div class="col-sm-6">
-                  <textarea name="shortDescription" class="form-control" rows="3" value="<?=$histoire['HIST_RESUME']?>" required>
-                  </textarea>
+                  <textarea name="shortDescription" class="form-control" rows="3" required><?=$histoire['HIST_RESUME']?></textarea>
                 </div>
               </div>
               <div class="form-group">
