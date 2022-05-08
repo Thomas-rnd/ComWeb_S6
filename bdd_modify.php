@@ -59,11 +59,6 @@ if (isUserConnected()) {
                     <div class="form-group">
                             <label for="exampleSelect1" class="form-label mt-4">Choix de la modification : </label>
                             <select name="choixModification" class="form-select" id="exampleSelect1">
-                                <option>Titre</option>
-                                <option>Auteur</option>
-                                <option>Résumé</option>
-                                <option>Date</option>
-                                <option>Image</option>
                                 <option>Histoire</option>
                                 <option>Narration</option>
                                 <option>Choix</option>
