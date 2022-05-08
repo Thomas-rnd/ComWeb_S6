@@ -39,49 +39,49 @@ if (isUserConnected()) {
     ?>
 
     <body>
-        <?php require_once "includes/header.php"; ?>
-        <h2 class="text-center">Ajout du contenu</h2>
         <div class="container">
-            <div class="well">
-                <form class="form-horizontal" role="form" enctype="multipart/form-data" action="content_add.php" method="post">
-                    <div class="form-group">
-                        <label for="exampleSelect1" class="form-label mt-4">Sélection d'une histoire : </label>
-                            <select name="histoire" class="form-select" id="exampleSelect1">
-                                <?php while($numHist = $histoires->fetch()) 
-                                { ?>
-                                    <div class="col-sm">
-                                        <option><?=$numHist['HIST_TITRE']?></option>
-                                    </div>
-                                <?php } ?>
-                            </select>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-sm">Narration : </label>
-                        <div class="col-sm">
-                            <textarea name="narration" class="form-control" rows="3" placeholder="Entrez du texte de narration" required></textarea>
+            <?php require_once "includes/header.php"; ?>
+            <h2 class="text-center">Ajout du contenu</h2>
+            <div class="container">
+                <div class="well">
+                    <form class="form-horizontal" role="form" enctype="multipart/form-data" action="content_add.php" method="post">
+                        <div class="form-group">
+                            <label for="exampleSelect1" class="form-label mt-4">Sélection d'une histoire : </label>
+                                <select name="histoire" class="form-select" id="exampleSelect1">
+                                    <?php while($numHist = $histoires->fetch()) 
+                                    { ?>
+                                        <div class="col-sm">
+                                            <option><?=$numHist['HIST_TITRE']?></option>
+                                        </div>
+                                    <?php } ?>
+                                </select>
                         </div>
-                    </div>
-                    <div class="form-group">
-                            <label for="exampleSelect1" class="form-label mt-4">Nombre de choix possible : </label>
-                            <select name="nbChoix" class="form-select" id="exampleSelect1">
-                                <option>0</option>
-                                <option>1</option>
-                                <option>2</option>
-                                <option>3</option>
-                            </select>
-                    </div>
-                    <div class="form-group">
-                        <div class="col-sm-4 col-sm-offset-4">
-                            <button type="submit" class="btn btn-default btn-primary"><span class="glyphicon glyphicon-save"></span> Enregistrer</button>
+                        <div class="form-group">
+                            <label class="col-sm">Narration : </label>
+                            <div class="col-sm">
+                                <textarea name="narration" class="form-control" rows="3" placeholder="Entrez du texte de narration" required></textarea>
+                            </div>
                         </div>
-                    </div>
-                </form>
-          </div>
-
-          <?php require_once "includes/footer.php"; ?>
-      </div>
-
-      <?php require_once "includes/scripts.php"; ?>
+                        <div class="form-group">
+                                <label for="exampleSelect1" class="form-label mt-4">Nombre de choix possible : </label>
+                                <select name="nbChoix" class="form-select" id="exampleSelect1">
+                                    <option>0</option>
+                                    <option>1</option>
+                                    <option>2</option>
+                                    <option>3</option>
+                                </select>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-4 col-sm-offset-4">
+                                <button type="submit" class="btn btn-default btn-primary"><span class="glyphicon glyphicon-save"></span> Enregistrer</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <?php require_once "includes/footer.php"; ?>
+        </div>
+        <?php require_once "includes/scripts.php"; ?>
     </body>
 
   </html>
