@@ -48,10 +48,9 @@ if (isUserConnected()) {
     ?>
 
     <body>
-      <div class="container">
         <?php require_once "includes/header.php"; ?>
-
-          <h2 class="text-center">Modification Information</h2>
+        <h2 class="text-center">Modification Information</h2>
+        <div class="container">
           <div class="well">
             <form class="form-horizontal" role="form" enctype="multipart/form-data" action="histoire_modify.php?histId=<?=$histId?>" method="post">
               <input type="hidden" name="id" value="<?= $movieId ?>">
