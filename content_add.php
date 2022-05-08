@@ -39,9 +39,9 @@ if (isUserConnected()) {
     ?>
 
     <body>
-      <div class="container">
         <?php require_once "includes/header.php"; ?>
-            <h2 class="text-center">Ajout du contenu</h2>
+        <h2 class="text-center">Ajout du contenu</h2>
+        <div class="container">
             <div class="well">
                 <form class="form-horizontal" role="form" enctype="multipart/form-data" action="content_add.php" method="post">
                     <div class="form-group">
@@ -56,10 +56,9 @@ if (isUserConnected()) {
                             </select>
                     </div>
                     <div class="form-group">
-                        <label class="col-sm-auto">Narration : </label>
-                        <div class="col-sm-6">
-                            <textarea name="narration" class="form-control" rows="3" placeholder="Entrez du texte de narration" required>
-                            </textarea>
+                        <label class="col-sm">Narration : </label>
+                        <div class="col-sm">
+                            <textarea name="narration" class="form-control" rows="3" placeholder="Entrez du texte de narration" required></textarea>
                         </div>
                     </div>
                     <div class="form-group">
