@@ -55,10 +55,9 @@ if (isUserConnected()) {
     ?>
 
     <body>
-      <div class="container">
         <?php require_once "includes/header.php"; ?>
-
-          <h2 class="text-center">Ajout d'une histoire</h2>
+        <h2 class="text-center">Ajout d'une histoire</h2>
+        <div class="container">
           <div class="well">
             <form class="form-horizontal" role="form" enctype="multipart/form-data" action="histoire_add.php" method="post">
               <input type="hidden" name="id" value="<?= $movieId ?>">
