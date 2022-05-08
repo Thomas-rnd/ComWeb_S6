@@ -8,7 +8,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="index.php"><span class="glyphicon glyphicon-film"></span> Histoire interactive</a>
+            <a class="navbar-brand" href="index.php"><span class="glyphicon glyphicon-book"></span> Histoire interactive</a>
         </div>
         <div class="collapse navbar-collapse" id="navbar-collapse-target">
             <?php if (isAdminConnected()) { ?>
@@ -35,6 +35,7 @@
                         </a>
                         <ul class="dropdown-menu">
                             <li><a href="login.php">Se connecter</a></li>
+                            <li><a href="create_account.php">S'inscrire</a></li>
                         </ul>
                     </li>
                 <?php } ?>
