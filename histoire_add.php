@@ -28,7 +28,7 @@ if (isUserConnected()) {
 
         // Initialisation avancement et pv des utilisateurs
         $stmt = getDb()->prepare('select * from user');
-        $nb = $stmt->roxCount();
+        $nb = $stmt->rowCount();
         $stmt = getDb()->prepare('select * from histoire where
         (HIST_TITRE, HIST_RESUME, HIST_AUTEUR, HIST_DATE, HIST_IMAGE)
         values (?, ?, ?, ?, ?)');
@@ -71,8 +71,7 @@ if (isUserConnected()) {
               <div class="form-group">
                 <label class="col-sm-4 control-label">Description courte</label>
                 <div class="col-sm-6">
-                  <textarea name="shortDescription" class="form-control" rows="3" placeholder="Entrez sa description courte" required>
-                  </textarea>
+                  <textarea name="shortDescription" class="form-control" rows="3" placeholder="Entrez sa description courte" required></textarea>
                 </div>
               </div>
               <div class="form-group">
