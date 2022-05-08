@@ -22,11 +22,11 @@ if (isUserConnected()) {
         }
         else if($_POST['choixModification'] == "Narration")
         {
-            redirect("narration_modify.php?histId=$histId");
+            redirect("content_modify.php?histId=$histId");
         }
         else
         {
-            redirect("choix_modify.php?histId=$histId");
+            redirect("choice_modify.php?histId=$histId");
         } 
     }}
     ?>
