@@ -24,7 +24,7 @@ if (isUserConnected()) {
             $modify->execute(array(
             'texte'=>$texte,
             'nbChoix'=>$nbChoix,
-            'narrId'=>$narrId,
+            'narrId'=>$narrId-$i,
             'histId'=>$histId));
         }     
         redirect("index.php");
@@ -91,7 +91,6 @@ if (isUserConnected()) {
                     </div>       
                 </form>
           </div>
-
           <?php require_once "includes/footer.php"; ?>
       </div>
 
