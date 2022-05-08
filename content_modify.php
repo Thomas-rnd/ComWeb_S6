@@ -5,6 +5,7 @@ session_start();
 if (isUserConnected()) {
     
     $histId=$_GET['histId'];
+    $narrId=$_GET['narrId'];
     $stmt = getDb()->prepare('select * from histoire where HIST_NUM=?');
     $stmt->execute(array($histId));
     $histoire = $stmt->fetch();
@@ -12,40 +13,20 @@ if (isUserConnected()) {
     $narrations->execute(array($histId));
 
     if (isset($_POST['narrations'])) {
-        for($i=0;$i<count($_POST['choix']);$i++)
+        for($i=0;$i<count($_POST['narrations']);$i++)
         {
-            $texte = escape($_POST['narration'][$i]);  
+            $texte = escape($_POST['narrations'][$i]);  
             $nbChoix = escape($_POST['nbChoix'][$i]);
             
             // modification in BD
-            $modify = getDb()->prepare("update narration set NARR_TEXTE=:texte, NARR_NBCHOIX=:nbChoix, 
+            $modify = getDb()->prepare("update narration set NARR_TEXTE=:texte, NARR_NBCHOIX=:nbChoix
             where NARR_INDEX=:narrId and HIST_NUM=:histId");
             $modify->execute(array(
             'texte'=>$texte,
             'nbChoix'=>$nbChoix,
-            'narrId'=>$i+1,
+            'narrId'=>$narrId,
             'histId'=>$histId));
-        }
-        
-        $tmpFile = $_FILES['image']['tmp_name'];
-        if (is_uploaded_file($tmpFile)) {
-            // upload history image
-            $image = basename($_FILES['image']['name']);
-            $uploadedFile = "images/$image";
-            move_uploaded_file($_FILES['image']['tmp_name'], $uploadedFile);
-        }
-        
-        $modify = getDb()->prepare("update histoire set HIST_TITRE=:titre, HIST_RESUME=:resume, 
-        HIST_AUTEUR=:auteur, HIST_DATE=:date, HIST_IMAGE=:image
-        where HIST_NUM=:histId");
-        $modify->execute(array(
-        'titre'=>$titre,
-        'resume'=>$resume,
-        'auteur'=>$auteur,
-        'date'=>$date,
-        'image'=>$image,
-        'histId'=>$histId));
-        
+        }     
         redirect("index.php");
     }}
     ?>
@@ -61,12 +42,11 @@ if (isUserConnected()) {
     <body>
       <div class="container">
         <?php require_once "includes/header.php"; ?>
-
         <h2 class="text-center">Modification narrations : </h2>
         <div class="container">
         <?php require_once "includes/header.php"; ?>
             <div class="well">
-                <form class="form-horizontal" role="form" enctype="multipart/form-data" action="content_modify.php?histId=<?=$histId?>" method="post">
+                <form class="form-horizontal" role="form" enctype="multipart/form-data" action="content_modify.php?histId=<?=$histId?>&narrId=<?=$narration['NARR_INDEX']?>" method="post">
                         <?php while($narration = $narrations->fetch()) 
                         { ?>
                             <div class="form-group">
@@ -76,30 +56,30 @@ if (isUserConnected()) {
                             <div class="form-group">
                                 <label for="exampleSelect1" class="form-label mt-4">Nombre de choix possible : </label>
                                     <select name="nbChoix[]" class="form-select" id="exampleSelect1" required >
-                                        <?php if($narration['NARR_NBCHOIX']=0){ ?>
+                                        <?php if($narration['NARR_NBCHOIX']==0){?>
                                             <option selected="selected">0</option>
-                                            <option>1</option>
-                                            <option>2</option>
-                                            <option>3</option>
-                                        <?php}?>
-                                        <?php else if($narration['NARR_NBCHOIX']=1){ ?>
+                                        <?php }
+                                        else{?>
                                             <option>0</option>
+                                        <?php }
+                                        if($narration['NARR_NBCHOIX']==1){?>
                                             <option selected="selected">1</option>
-                                            <option>2</option>
-                                            <option>3</option>
-                                        <?php}?>
-                                        <?php else if($narration['NARR_NBCHOIX']=2){ ?>
-                                            <option>0</option>
+                                        <?php }
+                                        else{?>
                                             <option>1</option>
+                                        <?php }
+                                        if($narration['NARR_NBCHOIX']==2){?>
                                             <option selected="selected">2</option>
-                                            <option>3</option>
-                                        <?php}?>
-                                        <?php else{ ?>
-                                            <option>0</option>
-                                            <option>1</option>
+                                        <?php }
+                                        else{?>
                                             <option>2</option>
+                                        <?php }
+                                        if($narration['NARR_NBCHOIX']==3){?>
                                             <option selected="selected">3</option>
-                                        <?php}?>
+                                        <?php }
+                                        else{?>
+                                            <option>3</option>
+                                        <?php }?>
                                     </select>
                             </div>                      
                             </br></br>
