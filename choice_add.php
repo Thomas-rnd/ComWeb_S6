@@ -33,17 +33,16 @@ if (isUserConnected()) {
     ?>
 
     <body>
-      <div class="container">
         <?php require_once "includes/header.php"; ?>
-            <h2 class="text-center">Ajout d'un choix</h2>
+        <h2 class="text-center">Ajout d'un choix</h2>
+            <div class="container">
             <div class="well">
                 <form class="form-horizontal" role="form" enctype="multipart/form-data" action="choice_add.php?histId=<?=$histId?>&narrId=<?=$narrId?>&nbChoix=<?=$nbChoix?>" method="post">
                     <?php for($i=0;$i<$nbChoix;$i++){?>
                         <div class="form-group">
                             <label class="col-sm-auto">Choix : </label>
                             <div class="col-sm-6">
-                                <textarea name="choix[]" class="form-control" rows="3" placeholder="Définition du choix" required>
-                                </textarea>
+                                <textarea name="choix[]" class="form-control" rows="3" placeholder="Définition du choix" required></textarea>
                             </div>
                         </div>
                         <div class="form-group">
