@@ -2,7 +2,7 @@
 require_once "includes/functions.php";
 session_start();
 
-if (isUserConnected()) {
+if (isAdminConnected()) {
     
     if (isset($_POST['titre'])) {
         // the history form has been posted : retrieve movie parameters
