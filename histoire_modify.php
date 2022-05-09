@@ -5,6 +5,7 @@ session_start();
 if (isUserConnected()) {
     
     $histId=$_GET['histId'];
+    $_SESSION['histId']=$histId;
     $stmt = getDb()->prepare('select * from histoire where HIST_NUM=?');
     $stmt->execute(array($histId));
     $histoire = $stmt->fetch();
