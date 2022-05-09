@@ -2,15 +2,18 @@
 require_once "includes/functions.php";
 session_start();
 
-$histId = $_GET['id'];
+if (isset($_POST['histId'])) 
+{
+    $histId = escape($_POST['histId']);
+    $_SESSION['histId']=$histId;
+}
 $stmt = getDb()->prepare('select * from histoire where HIST_NUM=?');
-$stmt->execute(array($histId));
-$histoire = $stmt->fetch(); // Access first (and only) result line
+$stmt->execute(array($_SESSION['histId']));
+$histoire = $stmt->fetch(); 
 ?>
 
 <!doctype html>
 <html>
-
 <?php 
 $pageTitle = $histoire['HIST_TITRE'];
 require_once "includes/head.php"; 
@@ -38,7 +41,11 @@ require_once "includes/head.php";
                         $avancement = $statistiques['AVANCEMENT'];?>
 
                         <div class = "position-absolute top-50 start-50 translate-middle" >
-                            <a class="btn btn-primary " href="histoire_read.php?histId=<?=$histId?>&usrAvancement=<?=$avancement?>">Lancer l'histoire</a>
+                            <form method="POST" action="histoire_read.php">
+                                <input type="hidden" name="histId" value="<?=$_SESSION['histId']?>"/>
+                                <input type="hidden" name="usrAvancement" value="<?=$avancement?>"/>
+                                <button class ="btn btn-link" type="submit">Lancer l'histoire</button>
+                            </form>
                         </div>
                     <?php } ?>
                 </div>
