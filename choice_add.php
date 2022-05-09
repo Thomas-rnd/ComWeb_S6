@@ -2,12 +2,7 @@
 require_once "includes/functions.php";
 session_start();
 
-if (isUserConnected()) {
-
-    $histId = $_GET['histId'];
-    $narrId = $_GET['narrId'];
-    $nbChoix = $_GET['nbChoix'];
-    
+if (isAdminConnected()) {
     if (isset($_POST['choix'])) {
         for($i=0;$i<count($_POST['choix']);$i++)
         {
@@ -18,7 +13,7 @@ if (isUserConnected()) {
             $stmt = getDb()->prepare('insert into choix
             (CH_TEXTE, CH_INDEX, NARR_INDEX, HIST_NUM)
             values (?, ?, ?, ?)');
-            $stmt->execute(array($choix, $indexChoix, $narrId, $histId));
+            $stmt->execute(array($choix, $indexChoix, $_SESSION['narrId'], $_SESSION['histId']));
         }
         redirect("index.php");
     }}
@@ -37,8 +32,8 @@ if (isUserConnected()) {
         <h2 class="text-center">Ajout d'un choix</h2>
             <div class="container">
             <div class="well">
-                <form class="form-horizontal" role="form" enctype="multipart/form-data" action="choice_add.php?histId=<?=$histId?>&narrId=<?=$narrId?>&nbChoix=<?=$nbChoix?>" method="post">
-                    <?php for($i=0;$i<$nbChoix;$i++){?>
+                <form class="form-horizontal" role="form" enctype="multipart/form-data" action="choice_add.php" method="post">
+                    <?php for($i=0;$i<$_SESSION['nbChoix'];$i++){?>
                         <div class="form-group">
                             <label class="col-sm-auto">Choix : </label>
                             <div class="col-sm-6">
