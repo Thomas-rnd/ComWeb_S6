@@ -2,7 +2,7 @@
 require_once "includes/functions.php";
 session_start();
 
-if (isUserConnected()) {
+if (isAdminConnected()) {
 
     $histoires = getDb()->query('select * from histoire order by HIST_NUM desc'); 
     
@@ -26,7 +26,10 @@ if (isUserConnected()) {
         $stmt->execute(array($narration, $nbChoix, $histId)); 
         $resultat=$stmt->fetch();   
         $narrId = $resultat['NARR_INDEX'];
-        redirect("choice_add.php?histId=$histId&narrId=$narrId&nbChoix=$nbChoix");
+        $_SESSION['histId']=$histId;
+        $_SESSION['narrId']=$narrId;
+        $_SESSION['nbChoix']=$nbChoix;
+        redirect("choice_add.php");
     }}
     ?>
 
