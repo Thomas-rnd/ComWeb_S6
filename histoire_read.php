@@ -7,18 +7,24 @@ session_start();
 <html>
 
 <?php 
-$histId = $_GET['histId'];
-$usrAvancement = $_GET['usrAvancement'];
+if (isset($_POST['histId'])) 
+{
+    $histId = escape($_POST['histId']);
+    $usrAvancement = escape($_POST['usrAvancement']);
+    $_SESSION['histId']=$histId;
+    $_SESSION['usrAvancement']=$usrAvancement;
+}
+
 $stmt = getDb()->prepare('select * from narration where HIST_NUM=? and NARR_INDEX=?');
-$stmt->execute(array($histId, $usrAvancement));
+$stmt->execute(array($_SESSION['histId'], $_SESSION['usrAvancement']));
 $narration = $stmt->fetch();
 
 $nbNarration = getDb()->prepare('select * from narration where HIST_NUM=?');
-$nbNarration->execute(array($histId));
-$avancement = $usrAvancement/$nbNarration->rowCount()*100;
+$nbNarration->execute(array($_SESSION['histId']));
+$avancement = $_SESSION['usrAvancement']/$nbNarration->rowCount()*100;
 
 $titre = getDb()->prepare('select * from histoire where HIST_NUM=?');
-$titre->execute(array($histId));
+$titre->execute(array($_SESSION['histId']));
 $histoire = $titre->fetch();
 $pageTitle = $histoire['HIST_TITRE'];
 
@@ -37,15 +43,19 @@ require_once "includes/head.php";
             <p><?= $narration['NARR_TEXTE'] ?></p>
             <?php 
             $choix = getDb()->prepare('select * from choix where NARR_INDEX=?');
-            $choix->execute(array($usrAvancement));?>
-            <div class="row">
+            $choix->execute(array($_SESSION['usrAvancement']));?>
+            <div class="row">    
                 <?php while($numChoix = $choix->fetch()) 
                 { ?>
-                    <div class="col-sm">
-                        <a class="m-auto btn btn-primary" href="histoire_read.php?histId=<?=$histId?>&usrAvancement=<?=$numChoix['CH_INDEX']?>"><?=$numChoix['CH_TEXTE'] ?></a>
-                        </br></br>
-                    </div>
-                <?php } ?>
+                    <form method="POST" action="histoire_read.php"> 
+                        <div class="col-sm">
+                            <input type="hidden" name="histId" value="<?=$_SESSION['histId']?>"/>
+                            <input type="hidden" name="usrAvancement" value="<?=$numChoix['CH_INDEX']?>"/>
+                            <button class ="btn btn-link" type="submit"><?=$numChoix['CH_TEXTE'] ?></button>
+                            </br></br>
+                        </div>
+                    </form>
+                <?php } ?>        
             </div>         
         </div>
         <?php require_once "includes/footer.php"; ?>
