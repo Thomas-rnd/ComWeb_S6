@@ -19,16 +19,13 @@ $histoires = getDb()->query('select * from histoire order by HIST_NUM desc');
 <body>
     <div class="container">
         <?php require_once "includes/header.php"; ?>
-            <div class="container">
-        <div class="d-flex">
-        <div class="container">
-        <?php foreach ($histoires as $histoire) { ?>
-            <article>
-                <h3><a class="titreHistoire" href="histoire.php?id=<?=$histoire['HIST_NUM']?>"><?=$histoire['HIST_TITRE']?></a></h3>
+        <form method="POST" action="histoire.php">
+            <?php foreach ($histoires as $histoire) { ?>
+                <input type="hidden" name="histId" value="<?=$histoire['HIST_NUM']?>"/>
+                <button class ="btn btn-link" type="submit"><?=$histoire['HIST_TITRE']?></button>
                 <p class="synopsisHistoire"><?=$histoire['HIST_RESUME']?></p>
-            </article>
-        <?php } ?>
-
+            <?php } ?>
+        </form>
         <?php require_once "includes/footer.php"; ?>
     </div>
     <?php require_once "includes/scripts.php"; ?>
