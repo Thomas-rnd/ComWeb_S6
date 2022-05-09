@@ -2,15 +2,13 @@
 require_once "includes/functions.php";
 session_start();
 
-if (isUserConnected()) {
+if (isAdminConnected()) {
     
-    $histId=$_GET['histId'];
-    $narrId=$_GET['narrId'];
     $stmt = getDb()->prepare('select * from histoire where HIST_NUM=?');
-    $stmt->execute(array($histId));
+    $stmt->execute(array($_SESSION['histId']));
     $histoire = $stmt->fetch();
-    $narrations = getDb()->prepare('select * from narration where HIST_NUM=?');
-    $narrations->execute(array($histId));
+    $narrations = getDb()->prepare('select * from narration where HIST_NUM=? order by NARR_INDEX desc');
+    $narrations->execute(array($_SESSION['histId']));
 
     if (isset($_POST['narrations'])) {
         for($i=0;$i<count($_POST['narrations']);$i++)
@@ -25,10 +23,13 @@ if (isUserConnected()) {
             'texte'=>$texte,
             'nbChoix'=>$nbChoix,
             'narrId'=>$narrId-$i,
-            'histId'=>$histId));
+            'histId'=>$_SESSION['histId']));
         }     
         redirect("index.php");
-    }}
+    }
+    $_SESSION['nbChoix']=$nbChoix;
+    $_SESSION['narrId']=$narrations->fetch()['NARR_INDEX'];   
+}
     ?>
 
   <!doctype html>
@@ -46,7 +47,7 @@ if (isUserConnected()) {
         <div class="container">
         <?php require_once "includes/header.php"; ?>
             <div class="well">
-                <form class="form-horizontal" role="form" enctype="multipart/form-data" action="content_modify.php?histId=<?=$histId?>&narrId=<?=$narration['NARR_INDEX']?>" method="post">
+                <form class="form-horizontal" role="form" enctype="multipart/form-data" action="content_modify.php" method="post">
                         <?php while($narration = $narrations->fetch()) 
                         { ?>
                             <div class="form-group">
