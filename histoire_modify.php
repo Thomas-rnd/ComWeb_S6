@@ -2,12 +2,10 @@
 require_once "includes/functions.php";
 session_start();
 
-if (isUserConnected()) {
+if (isAdminConnected()) {
     
-    $histId=$_GET['histId'];
-    $_SESSION['histId']=$histId;
     $stmt = getDb()->prepare('select * from histoire where HIST_NUM=?');
-    $stmt->execute(array($histId));
+    $stmt->execute(array($_SESSION['histId']));
     $histoire = $stmt->fetch();
 
     if (isset($_POST['titre'])) {
@@ -34,7 +32,7 @@ if (isUserConnected()) {
         'auteur'=>$auteur,
         'date'=>$date,
         'image'=>$image,
-        'histId'=>$histId));
+        'histId'=>$_SESSION['histId']));
         
         redirect("index.php");
     }}
@@ -53,8 +51,8 @@ if (isUserConnected()) {
         <h2 class="text-center">Modification Information</h2>
         <div class="container">
           <div class="well">
-            <form class="form-horizontal" role="form" enctype="multipart/form-data" action="histoire_modify.php?histId=<?=$histId?>" method="post">
-              <input type="hidden" name="id" value="<?= $movieId ?>">
+            <form class="form-horizontal" role="form" enctype="multipart/form-data" action="histoire_modify.php" method="post">
+              <input type="hidden" name="histId" value="<?= $_SESSION['histId']?>">
               <div class="form-group">
                 <label class="col-sm-4 control-label">Titre</label>
                 <div class="col-sm-6">
@@ -76,7 +74,7 @@ if (isUserConnected()) {
               <div class="form-group">
                 <label class="col-sm-4 control-label">Date</label>
                 <div class="col-sm-4">
-                  <input type="date" name="date" value="<?= $movieYear ?>" class="form-control" placeholder="<?=$histoire['HIST_DATE']?>" required>
+                  <input type="date" name="date" class="form-control" placeholder="<?=$histoire['HIST_DATE']?>" required>
                 </div>
               </div>
               <div class="form-group">
