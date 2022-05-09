@@ -18,17 +18,19 @@ if (isUserConnected()) {
 
         if($_POST['choixModification'] == "Histoire")
         {
-            redirect("histoire_modify.php?histId=$histId");
+            redirect("histoire_modify.php");
         }
         else if($_POST['choixModification'] == "Narration")
         {
-            redirect("content_modify.php?histId=$histId");
+            redirect("content_modify.php");
         }
         else
         {
-            redirect("choice_modify.php?histId=$histId");
+            redirect("choice_modify.php");
         } 
-    }}
+    }
+    $_SESSION['histId']=$histId;
+}
     ?>
 
   <!doctype html>
