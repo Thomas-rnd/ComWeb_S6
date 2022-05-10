@@ -4,8 +4,8 @@
 function getDb() {
     // Local deployment
     $server = "localhost";
-    $username = "Admin";
-    $password = "admin";
+    $username = "thomarenaud";
+    $password = "Trenaud1";
     $db = "jesuislehero_renaud_leger"; 
     
     /*
