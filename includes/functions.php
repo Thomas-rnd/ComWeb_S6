@@ -6,7 +6,7 @@ function getDb() {
     $server = "localhost";
     $username = "thomarenaud";
     $password = "Trenaud1";
-    $db = "jesuislehero_renaud_leger"; 
+    $db = "thomarenaud"; 
     
     /*
     // Deployment on Heroku with ClearDB for MySQL
