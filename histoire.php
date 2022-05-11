@@ -5,8 +5,9 @@ session_start();
 if (isset($_POST['histId'])) 
 {
     $histId = escape($_POST['histId']);
-    $_SESSION['histId']=$histId;
 }
+$_SESSION['histId']=$histId;
+
 $stmt = getDb()->prepare('select * from histoire where HIST_NUM=?');
 $stmt->execute(array($_SESSION['histId']));
 $histoire = $stmt->fetch(); 
@@ -39,7 +40,6 @@ require_once "includes/head.php";
                         $tmp->execute(array($usrId,$histoire['HIST_NUM']));
                         $statistiques = $tmp->fetch();          
                         $avancement = $statistiques['AVANCEMENT'];?>
-
                         <div class = "position-absolute top-50 start-50 translate-middle" >
                             <form method="POST" action="histoire_read.php">
                                 <input type="hidden" name="histId" value="<?=$_SESSION['histId']?>"/>
