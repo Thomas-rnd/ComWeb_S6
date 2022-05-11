@@ -17,30 +17,43 @@ if (isAdminConnected()) {
             $image = basename($_FILES['image']['name']);
             $uploadedFile = "images/$image";
             move_uploaded_file($_FILES['image']['tmp_name'], $uploadedFile);
+
+            // insert history into BD
+            $stmt = getDb()->prepare('insert into histoire
+            (HIST_TITRE, HIST_RESUME, HIST_AUTEUR, HIST_DATE, HIST_IMAGE)
+            values (?, ?, ?, ?, ?)');
+            $stmt->execute(array($titre, $resume, $auteur,
+            $date, $image));
+
+            $stmt = getDb()->prepare('select * from histoire where
+            (HIST_TITRE, HIST_RESUME, HIST_AUTEUR, HIST_DATE, HIST_IMAGE)
+            values (?, ?, ?, ?, ?)');
+            $stmt->execute(array($titre, $resume, $auteur, $date, $image));
+            $histoire = $stmt->fetch();
+        }
+        else
+        {
+              // insert history into BD
+              $stmt = getDb()->prepare('insert into histoire
+              (HIST_TITRE, HIST_RESUME, HIST_AUTEUR, HIST_DATE, HIST_IMAGE)
+              values (?, ?, ?, ?, ?)');
+              $stmt->execute(array($titre, $resume, $auteur,
+              $date, null));
+
+              $stmt = getDb()->prepare('select * from histoire where
+              HIST_TITRE=? and HIST_RESUME=? and HIST_AUTEUR=? and HIST_DATE=?');
+              $stmt->execute(array($titre, $resume, $auteur, $date));
+              $histoire = $stmt->fetch();
         }
         
-        // insert history into BD
-        $stmt = getDb()->prepare('insert into histoire
-        (HIST_TITRE, HIST_RESUME, HIST_AUTEUR, HIST_DATE, HIST_IMAGE)
-        values (?, ?, ?, ?, ?)');
-        $stmt->execute(array($titre, $resume, $auteur,
-        $date, $image));
-
         // Initialisation avancement et pv des utilisateurs
-        $stmt = getDb()->prepare('select * from histoire where
-        (HIST_TITRE, HIST_RESUME, HIST_AUTEUR, HIST_DATE, HIST_IMAGE)
-        values (?, ?, ?, ?, ?)');
-        $stmt->execute(array($titre, $resume, $auteur, $date, $image));
-        $histoire = $stmt->fetch();
-
-        $stmt = getDb()->prepare('select * from user order by USR_ID');
-        $stmt->execute();
-        while($usr = $stmt->fetch())
+        $usr = getDb()->prepare('select * from user order by USR_ID');
+        $usr->execute();
+        while($user = $usr->fetch())
         {
           $stmt = getDb()->prepare('insert into statistiques
-          (USR_ID, HIST_NUM, AVANCEMENT, PV)
-          values (?, ?, ?, ?)');
-          $stmt->execute(array($usr['USR_ID'], $histoire['HIST_NUM'], 1, 3));
+          (USR_ID, HIST_NUM, AVANCEMENT, NB_GAGNE, NB_PERDU, NB_JOUE) values (?, ?, ?, ? ,?, ?)');
+          $stmt->execute(array($user['USR_ID'], $histoire['HIST_NUM'],1,0,0,0));
         }
         redirect("index.php");
     }}
