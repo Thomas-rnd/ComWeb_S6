@@ -43,7 +43,7 @@ if (isAdminConnected()) {
                         <div class="form-group">
                             <label for="exampleSelect1" class="form-label mt-4">Index du choix : </label>
                             <div class="col-sm-6">
-                                <input type="number" name="indexChoix[]" class="form-control" placeholder="Entrez l'index de retour du choix" required>
+                                <input type="number" name="indexChoix[]" class="form-control" placeholder="Entrez l'index de retour du choix" min="0" required>
                             </div>
                         </div>
                     <?php } ?>
