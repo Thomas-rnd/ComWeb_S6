@@ -1,33 +1,75 @@
 <?php
 require_once "includes/functions.php";
 session_start();
-?>
 
-<!doctype html>
-<html>
+$stmt = getDb()->prepare('select * from user where USR_LOGIN=?');
+$stmt->execute(array($_SESSION['login']));
+$user=$stmt->fetch();
 
-<?php 
+$stmt = getDb()->prepare('select * from statistiques where USR_ID=? and HIST_NUM=?');
+$stmt->execute(array($user['USR_ID'], $_SESSION['histId']));
+$statistiques = $stmt->fetch();
+
+$nbNarrations = getDb()->prepare('select * from narration where HIST_NUM=?');
+$nbNarrations->execute(array($_SESSION['histId']));
+
 if (isset($_POST['histId'])) 
 {
     $histId = escape($_POST['histId']);
     $usrAvancement = escape($_POST['usrAvancement']);
     $_SESSION['histId']=$histId;
-    $_SESSION['usrAvancement']=$usrAvancement;
+
+    $stmt = getDb()->prepare('select * from narration where HIST_NUM=? and NARR_INDEX=?');
+    $stmt->execute(array($_SESSION['histId'], $statistiques['AVANCEMENT']));
+    $choixNarration = $stmt->fetch();
+
+    if($usrAvancement==$nbNarrations->rowCount())
+    {
+        $modify = getDb()->prepare("update statistiques set AVANCEMENT=:avancement, NB_GAGNE=:gagne
+        where USR_ID=:usrId and HIST_NUM=:histId");
+        $modify->execute(array(
+        'avancement'=>1,
+        'gagne'=>$statistiques['NB_GAGNE']+1,
+        'usrId'=>$user['USR_ID'],
+        'histId'=>$_SESSION['histId']));
+    }
+    else if($choixNarration['NB_CHOIX']=0)
+    {
+        $modify = getDb()->prepare("update statistiques set AVANCEMENT=:avancement, NB_PERDU=:perdu
+        where USR_ID=:usrId and HIST_NUM=:histId");
+        $modify->execute(array(
+        'avancement'=>1,
+        'perdu'=>$statistiques['NB_PERDU']+1,
+        'usrId'=>$user['USR_ID'],
+        'histId'=>$_SESSION['histId']));
+    }
+    else
+    {
+        $modify = getDb()->prepare("update statistiques set AVANCEMENT=:avancement, NB_JOUE=:joue
+        where USR_ID=:usrId and HIST_NUM=:histId");
+        $modify->execute(array(
+        'avancement'=>$usrAvancement,
+        'joue'=>$statistiques['NB_JOUE']+1,
+        'usrId'=>$user['USR_ID'],
+        'histId'=>$_SESSION['histId']));
+    }
 }
 
 $stmt = getDb()->prepare('select * from narration where HIST_NUM=? and NARR_INDEX=?');
-$stmt->execute(array($_SESSION['histId'], $_SESSION['usrAvancement']));
+$stmt->execute(array($_SESSION['histId'], $statistiques['AVANCEMENT']));
 $narration = $stmt->fetch();
 
-$nbNarration = getDb()->prepare('select * from narration where HIST_NUM=?');
-$nbNarration->execute(array($_SESSION['histId']));
-$avancement = $_SESSION['usrAvancement']/$nbNarration->rowCount()*100;
+$avancement = $statistiques['AVANCEMENT']/$nbNarrations->rowCount()*100;
 
 $titre = getDb()->prepare('select * from histoire where HIST_NUM=?');
 $titre->execute(array($_SESSION['histId']));
 $histoire = $titre->fetch();
-$pageTitle = $histoire['HIST_TITRE'];
+?>
 
+<!doctype html>
+<html>
+
+<?php
 $pageTitle = $histoire['HIST_TITRE'];
 require_once "includes/head.php"; 
 ?>
@@ -43,7 +85,7 @@ require_once "includes/head.php";
             <p><?= $narration['NARR_TEXTE'] ?></p>
             <?php 
             $choix = getDb()->prepare('select * from choix where NARR_INDEX=?');
-            $choix->execute(array($_SESSION['usrAvancement']));?>
+            $choix->execute(array($statistiques['AVANCEMENT']));?>
             <div class="row">    
                 <?php while($numChoix = $choix->fetch()) 
                 { ?>
