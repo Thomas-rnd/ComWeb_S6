@@ -19,6 +19,10 @@ if (isAdminConnected()) {
     $stmt->execute(array($_SESSION['histId']));
     $premièreNarration = $stmt->fetch();
 
+    $stmt = getDb()->prepare('select * from narration where HIST_NUM=? order by NARR_INDEX desc');
+    $stmt->execute(array($_SESSION['histId']));
+    $dernièreNarration = $stmt->fetch();
+
     if (isset($_POST['narrations'])) {
         for($i=0;$i<count($_POST['narrations']);$i++)
         {
@@ -111,7 +115,7 @@ if (isAdminConnected()) {
                                 </div>
                                 <div class="form-group">
                                     <label for="exampleSelect1" class="form-label mt-4">Index de renvoie : </label>
-                                    <input type="number" name="indexChoix[]" class="form-control" value="<?=$choice['CH_INDEX']?>">
+                                    <input type="number" name="indexChoix[]" class="form-control" value="<?=$choice['CH_INDEX']?>" min="0" max="<?=$dernièreNarration['NARR_INDEX']?>">
                                 </div>                      
                                 </br></br>
                             <?php } ?>                
