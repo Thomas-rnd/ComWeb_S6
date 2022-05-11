@@ -7,28 +7,44 @@ if (isAdminConnected()) {
     $stmt = getDb()->prepare('select * from histoire where HIST_NUM=?');
     $stmt->execute(array($_SESSION['histId']));
     $histoire = $stmt->fetch();
-    $narrations = getDb()->prepare('select * from narration where HIST_NUM=? order by NARR_INDEX desc');
+
+    $narrations = getDb()->prepare('select * from narration where HIST_NUM=?');
     $narrations->execute(array($_SESSION['histId']));
+
+    $stmt = getDb()->prepare('select * from choix where HIST_NUM=?');
+    $stmt->execute(array($_SESSION['histId']));
+    $premierChoix = $stmt->fetch();
+
+    $stmt = getDb()->prepare('select * from narration where HIST_NUM=?');
+    $stmt->execute(array($_SESSION['histId']));
+    $premièreNarration = $stmt->fetch();
 
     if (isset($_POST['narrations'])) {
         for($i=0;$i<count($_POST['narrations']);$i++)
         {
-            $texte = escape($_POST['narrations'][$i]);  
+            $texteNarration = escape($_POST['narrations'][$i]);  
             $nbChoix = escape($_POST['nbChoix'][$i]);
+            $texteChoix = escape($_POST['choix'][$i]);  
+            $chIndex = escape($_POST['indexChoix'][$i]);
             
             // modification in BD
-            $modify = getDb()->prepare("update narration set NARR_TEXTE=:texte, NARR_NBCHOIX=:nbChoix
+            $modifyNarration = getDb()->prepare("update narration set NARR_TEXTE=:texte, NARR_NBCHOIX=:nbChoix
             where NARR_INDEX=:narrId and HIST_NUM=:histId");
-            $modify->execute(array(
-            'texte'=>$texte,
+            $modifyNarration->execute(array(
+            'texte'=>$texteNarration,
             'nbChoix'=>$nbChoix,
-            'narrId'=>$narrId-$i,
+            'narrId'=>$i+$premièreNarration['NARR_INDEX'],
             'histId'=>$_SESSION['histId']));
+
+            $modifyChoix = getDb()->prepare("update choix set CH_TEXTE=:texte, CH_INDEX=:index
+            where CH_NUM=:num");
+            $modifyChoix->execute(array(
+            'texte'=>$texteChoix,
+            'index'=>$chIndex,
+            'num'=>$premierChoix['CH_NUM']+$i));
         }     
         redirect("index.php");
     }
-    $_SESSION['nbChoix']=$nbChoix;
-    $_SESSION['narrId']=$narrations->fetch()['NARR_INDEX'];   
 }
     ?>
 
@@ -36,7 +52,7 @@ if (isAdminConnected()) {
   <html>
 
   <?php
-    $pageTitle = "Ajout d'une histoire";
+    $pageTitle = "Modification narration";
     require_once "includes/head.php";
     ?>
 
@@ -51,7 +67,7 @@ if (isAdminConnected()) {
                         <?php while($narration = $narrations->fetch()) 
                         { ?>
                             <div class="form-group">
-                                <label class="col-sm-6 control-label">Narration <?=$narration['NARR_INDEX']?>:</label>
+                                <label class="col-sm-6 control-label">Narration <?=$narration['NARR_INDEX']?> :</label>
                                 <textarea name="narrations[]" class="form-control" rows="3" required><?=$narration['NARR_TEXTE']?></textarea>
                             </div>
                             <div class="form-group">
@@ -82,7 +98,23 @@ if (isAdminConnected()) {
                                             <option>3</option>
                                         <?php }?>
                                     </select>
-                            </div>                      
+                            </div> 
+                            <?php
+                            $choix = getDb()->prepare('select * from choix where HIST_NUM=? and NARR_INDEX=?');
+                            $choix->execute(array($_SESSION['histId'],$narration['NARR_INDEX']));   
+                            ?>
+                            <?php while($choice=$choix->fetch()) 
+                            { ?>
+                                <div class="form-group">
+                                    <label class="col-sm-6 control-label">Choix <?=$choice['CH_NUM']?> :</label>
+                                    <textarea name="choix[]" class="form-control" rows="3" required><?=$choice['CH_TEXTE']?></textarea>
+                                </div>
+                                <div class="form-group">
+                                    <label for="exampleSelect1" class="form-label mt-4">Index de renvoie : </label>
+                                    <input type="number" name="indexChoix[]" class="form-control" value="<?=$choice['CH_INDEX']?>">
+                                </div>                      
+                                </br></br>
+                            <?php } ?>                
                             </br></br>
                         <?php } ?>
                     <div class="form-group">
