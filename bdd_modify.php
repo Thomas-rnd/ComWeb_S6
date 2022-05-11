@@ -20,14 +20,10 @@ if (isUserConnected()) {
         {
             redirect("histoire_modify.php");
         }
-        else if($_POST['choixModification'] == "Narration")
+        else if($_POST['choixModification'] == "Contenu")
         {
             redirect("content_modify.php");
         }
-        else
-        {
-            redirect("choice_modify.php");
-        } 
     }
     $_SESSION['histId']=$histId;
 }
@@ -62,8 +58,7 @@ if (isUserConnected()) {
                             <label for="exampleSelect1" class="form-label mt-4">Choix de la modification : </label>
                             <select name="choixModification" class="form-select" id="exampleSelect1">
                                 <option>Histoire</option>
-                                <option>Narration</option>
-                                <option>Choix</option>
+                                <option>Contenu</option>
                             </select>
                     </div>
                     <div class="form-group">
