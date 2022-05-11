@@ -27,20 +27,20 @@ if (isAdminConnected()) {
         $date, $image));
 
         // Initialisation avancement et pv des utilisateurs
-        $stmt = getDb()->prepare('select * from user');
-        $nb = $stmt->rowCount();
         $stmt = getDb()->prepare('select * from histoire where
         (HIST_TITRE, HIST_RESUME, HIST_AUTEUR, HIST_DATE, HIST_IMAGE)
         values (?, ?, ?, ?, ?)');
-        $stmt->execute(array($titre, $resume, $auteur,
-        $date, $image));
+        $stmt->execute(array($titre, $resume, $auteur, $date, $image));
         $histoire = $stmt->fetch();
-        for($i=1;$i<=$nb;$i++)
+
+        $stmt = getDb()->prepare('select * from user order by USR_ID');
+        $stmt->execute();
+        while($usr = $stmt->fetch())
         {
-          $stmt = getDb()->prepare('insert into statistique
+          $stmt = getDb()->prepare('insert into statistiques
           (USR_ID, HIST_NUM, AVANCEMENT, PV)
-          values (?, ?, ?, ?, ?)');
-          $stmt->execute(array($i, $histoire['HIST_NUM'], 1, 3));
+          values (?, ?, ?, ?)');
+          $stmt->execute(array($usr['USR_ID'], $histoire['HIST_NUM'], 1, 3));
         }
         redirect("index.php");
     }}
