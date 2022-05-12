@@ -23,11 +23,10 @@ require_once "includes/head.php";
 <body>
     <div class="container">
         <?php require_once "includes/header.php"; ?>
-
-        <div class="card" style="width: 25rem;">
+        <div class="card border-light mb-3" style="max-width: 30rem;">
             <img class="img-responsive histImage" src="images/<?= $histoire['HIST_IMAGE'] ?>" title="<?= $histoire['HIST_TITRE'] ?>" />
                 <div class="card-body">
-                    <h3 class="card-title"><?= $histoire['HIST_TITRE'] ?><?="," ?> <?= $histoire['HIST_AUTEUR'] ?> </h3>
+                    <h3 class="card-title"><?= $histoire['HIST_TITRE'] ?><?="," ?> <?= $histoire['HIST_AUTEUR'] ?></h3>
                     <h4 class="card-subtitle"><?= $histoire['HIST_DATE'] ?></h4>
                     <p class = "card-text"><?= $histoire['HIST_RESUME'] ?></p>
                     <?php 
@@ -50,10 +49,9 @@ require_once "includes/head.php";
                     <?php } ?>
                 </div>
         </div>
-    </div>
 
     <?php require_once "includes/footer.php"; ?>
-</div>
+    </div>
 
 <?php require_once "includes/scripts.php"; ?>
 </body>
