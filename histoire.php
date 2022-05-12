@@ -5,8 +5,8 @@ session_start();
 if (isset($_POST['histId'])) 
 {
     $histId = escape($_POST['histId']);
+    $_SESSION['histId']=$histId;
 }
-$_SESSION['histId']=$histId;
 
 $stmt = getDb()->prepare('select * from histoire where HIST_NUM=?');
 $stmt->execute(array($_SESSION['histId']));
