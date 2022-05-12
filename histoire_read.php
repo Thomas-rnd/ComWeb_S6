@@ -20,7 +20,7 @@ if (isset($_POST['histId']))
     $_SESSION['histId']=$histId;
 
     $stmt = getDb()->prepare('select * from narration where HIST_NUM=? and NARR_INDEX=?');
-    $stmt->execute(array($_SESSION['histId'], $statistiques['AVANCEMENT']));
+    $stmt->execute(array($_SESSION['histId'], $usrAvancement));
     $choixNarration = $stmt->fetch();
 
     if($usrAvancement==$nbNarrations->rowCount())
@@ -33,7 +33,7 @@ if (isset($_POST['histId']))
         'usrId'=>$user['USR_ID'],
         'histId'=>$_SESSION['histId']));
     }
-    else if($choixNarration['NB_CHOIX']=0)
+    else if($choixNarration['NARR_NBCHOIX']==0)
     {
         $modify = getDb()->prepare("update statistiques set AVANCEMENT=:avancement, NB_PERDU=:perdu
         where USR_ID=:usrId and HIST_NUM=:histId");
@@ -55,8 +55,12 @@ if (isset($_POST['histId']))
     }
 }
 
+$stmt = getDb()->prepare('select * from statistiques where USR_ID=? and HIST_NUM=?');
+$stmt->execute(array($user['USR_ID'], $_SESSION['histId']));
+$majStatistiques = $stmt->fetch();
+
 $stmt = getDb()->prepare('select * from narration where HIST_NUM=? and NARR_INDEX=?');
-$stmt->execute(array($_SESSION['histId'], $statistiques['AVANCEMENT']));
+$stmt->execute(array($_SESSION['histId'], $majStatistiques['AVANCEMENT']));
 $narration = $stmt->fetch();
 
 $avancement = $statistiques['AVANCEMENT']/$nbNarrations->rowCount()*100;
@@ -78,14 +82,14 @@ require_once "includes/head.php";
     <div class="container">
         <?php require_once "includes/header.php"; ?>
         <div class="jumbotron">
-            <h2><?= $histoire['HIST_TITRE']?></h2>
+            <h2><?= $histoire['HIST_TITRE'].$majStatistiques['AVANCEMENT']?></h2>
             <div class="progress">
                 <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" style="width: <?= $avancement ?>%;" aria-valuenow="<?= $avancement ?>" aria-valuemin="0" aria-valuemax="100"></div>
             </div>
             <p><?= $narration['NARR_TEXTE'] ?></p>
             <?php 
             $choix = getDb()->prepare('select * from choix where NARR_INDEX=?');
-            $choix->execute(array($statistiques['AVANCEMENT']));?>
+            $choix->execute(array($majStatistiques['AVANCEMENT']));?>
             <div class="row">    
                 <?php while($numChoix = $choix->fetch()) 
                 { ?>
@@ -93,7 +97,7 @@ require_once "includes/head.php";
                         <div class="col-sm">
                             <input type="hidden" name="histId" value="<?=$_SESSION['histId']?>"/>
                             <input type="hidden" name="usrAvancement" value="<?=$numChoix['CH_INDEX']?>"/>
-                            <button class ="btn btn-link" type="submit"><?=$numChoix['CH_TEXTE'] ?></button>
+                            <button class ="btn btn-link" type="submit"> <?=$numChoix['CH_TEXTE'] ?></button>
                             </br></br>
                         </div>
                     </form>
