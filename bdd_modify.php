@@ -24,8 +24,9 @@ if (isUserConnected()) {
         {
             redirect("content_modify.php");
         }
+        $_SESSION['histId']=$histId;
     }
-    $_SESSION['histId']=$histId;
+    
 }
     ?>
 
