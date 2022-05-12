@@ -16,7 +16,14 @@ $nbNarrations->execute(array($_SESSION['histId']));
 if (isset($_POST['histId'])) 
 {
     $histId = escape($_POST['histId']);
-    $usrAvancement = escape($_POST['usrAvancement']);
+    if (isset($_POST['usrAvancement']))
+    {
+        $usrAvancement = escape($_POST['usrAvancement']);
+    }
+    elseif (isset($_POST['resetAvancement'])) 
+    {
+        $usrAvancement = escape($_POST['resetAvancement']);
+    }
     $_SESSION['histId']=$histId;
 
     $stmt = getDb()->prepare('select * from narration where HIST_NUM=? and NARR_INDEX=?');
@@ -63,7 +70,7 @@ $stmt = getDb()->prepare('select * from narration where HIST_NUM=? and NARR_INDE
 $stmt->execute(array($_SESSION['histId'], $majStatistiques['AVANCEMENT']));
 $narration = $stmt->fetch();
 
-$avancement = $statistiques['AVANCEMENT']/$nbNarrations->rowCount()*100;
+$avancement = $majStatistiques['AVANCEMENT']/$nbNarrations->rowCount()*100;
 
 $titre = getDb()->prepare('select * from histoire where HIST_NUM=?');
 $titre->execute(array($_SESSION['histId']));
@@ -101,7 +108,15 @@ require_once "includes/head.php";
                             </br></br>
                         </div>
                     </form>
-                <?php } ?>        
+                <?php } ?>   
+                <form method="POST" action="histoire_read.php"> 
+                    <div class="col-sm">
+                        <input type="hidden" name="histId" value="<?=$_SESSION['histId']?>"/>
+                        <input type="hidden" name="resetAvancement" value="1"/>
+                        <button class ="btn btn-primary" type="submit">Relancer l'histoire</button>
+                        </br></br>
+                    </div>
+                </form>     
             </div>         
         </div>
         <?php require_once "includes/footer.php"; ?>
