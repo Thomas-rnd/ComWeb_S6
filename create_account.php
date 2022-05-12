@@ -10,10 +10,23 @@ if (!empty($_POST['login']) and !empty($_POST['password'])) {
     if ($stmt->rowCount() == 0) {
         // Login not already used
         $stmt = getDb()->prepare('insert into user
-          (USR_LOGIN, USR_PASSWORD)
-          values (?, ?)');
-          $stmt->execute(array($login, $password));
-          redirect("index.php");
+        (USR_LOGIN, USR_PASSWORD)
+        values (?, ?)');
+        $stmt->execute(array($login, $password));
+        
+        $stmt = getDb()->prepare('select * from user where USR_LOGIN=?');
+        $stmt->execute(array($login));
+        $usr=$stmt->fetch();
+
+        $histoire = getDb()->prepare('select * from histoire order by HIST_NUM');
+        $histoire->execute();
+        while($initHistoire = $histoire->fetch())
+        {
+            $stmt = getDb()->prepare('insert into statistiques
+            (USR_ID, HIST_NUM, AVANCEMENT, NB_GAGNE, NB_PERDU, NB_JOUE) values (?, ?, ?, ? ,?, ?)');
+            $stmt->execute(array($usr['USR_ID'], $initHistoire['HIST_NUM'],1,0,0,0));
+        }
+        redirect("index.php");
     }
     else {
         $error = "Identifiant déjà utilisé";
