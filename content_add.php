@@ -29,6 +29,9 @@ if (isAdminConnected()) {
         $_SESSION['histId']=$histId;
         $_SESSION['narrId']=$narrId;
         $_SESSION['nbChoix']=$nbChoix;
+
+        $narrNonCrées = getDb()->prepare('select * from choix where NARR_INDEX!=ALL(select NARR_INDEX from narration)');
+        $narrNonCrées->execute();  
         redirect("choice_add.php");
     }}
     ?>
@@ -59,6 +62,19 @@ if (isAdminConnected()) {
                                     <?php } ?>
                                 </select>
                         </div>
+                        <!--
+                        <div class="form-group">
+                            <label for="exampleSelect1" class="form-label mt-4">Les narrations à créer : </label>
+                                <select name="histoire" class="form-select" id="exampleSelect1">
+                                    <?php /* while($numNarr = $narrNonCrées->fetch()) 
+                                    { ?>
+                                        <div class="col-sm">
+                                            <option><?=$numNarr['NARR_INDEX']?> - <?=$numNarr['NARR_TEXTE']?></option>
+                                        </div>
+                                    <?php } */?>
+                                </select>
+                        </div>
+                        -->
                         <div class="form-group">
                             <label class="col-sm">Narration : </label>
                             <div class="col-sm">
