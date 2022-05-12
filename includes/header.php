@@ -1,9 +1,9 @@
 <?php require_once "includes/functions.php"; ?>
 
-<nav class="navbar navbar-default navbar-fixed-top" role="navigation">
-    <div class="container">
+<nav class="navbar navbar-brand-lg navbar-dark bg-light" role="navigation">
+    <div class="container-fluid">
         <div class="navbar-header">
-            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-collapse-target">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
@@ -16,6 +16,7 @@
                     <li><a href="histoire_add.php">Ajouter une histoire</a></li>
                     <li><a href="content_add.php">Ajouter une narration</a></li>
                     <li><a href="bdd_modify.php">Modification histoire</a></li>
+                    <li><a href="histoire_delete.php">Suppression histoire</a></li>
                 </ul>
             <?php } ?>
             <ul class="nav navbar-nav navbar-right">
