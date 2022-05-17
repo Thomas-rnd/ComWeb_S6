@@ -2,12 +2,14 @@
 require_once "includes/functions.php";
 session_start();
 
-if (!empty($_POST['login']) and !empty($_POST['password'])) {
+if (!empty($_POST['login']) and !empty($_POST['password'])) 
+{
     $login = $_POST['login'];
     $password = $_POST['password'];
     $stmt = getDb()->prepare('select * from user where USR_LOGIN=?');
     $stmt->execute(array($login));
-    if ($stmt->rowCount() == 0) {
+    if ($stmt->rowCount() == 0) 
+    {
         // Login not already used
         $stmt = getDb()->prepare('insert into user
         (USR_LOGIN, USR_PASSWORD)
@@ -28,11 +30,11 @@ if (!empty($_POST['login']) and !empty($_POST['password'])) {
         }
         redirect("index.php");
     }
-    else {
+    else 
+    {
         $error = "Identifiant déjà utilisé";
     }
-}
-?>
+}?>
 
 <!doctype html>
 <html>
@@ -43,12 +45,11 @@ require_once "includes/head.php";
 ?>
 
 <body>
+    <?php require_once "includes/header.php"; ?>
     <div class="container">
-        <?php require_once "includes/header.php"; ?>
-
         <h2 class="text-center"><?= $pageTitle ?></h2>
-
-        <?php if (isset($error)) { ?>
+        <?php if (isset($error)) 
+        {?>
             <div class="alert alert-danger">
                 <strong>Erreur !</strong> <?= $error ?>
             </div>
@@ -57,27 +58,25 @@ require_once "includes/head.php";
         <div class="well">
             <form class="form-signin form-horizontal" role="form" action="create_account.php" method="post">
                 <div class="form-group">
-                    <div class="col-sm-6 col-sm-offset-3 col-md-4 col-md-offset-4">
-                    <input type="text" name="login" class="form-control" placeholder="Entrez votre login" required autofocus>
+                    <div class="col-sm col-sm-offset col-md col-md-offset">
+                        <input type="text" name="login" class="form-control" placeholder="Entrez votre login" required autofocus>
                     </div>
                 </div>
                 <div class="form-group">
-                    <div class="col-sm-6 col-sm-offset-3 col-md-4 col-md-offset-4">
+                    <div class="col-sm col-sm-offset col-md col-md-offset">
                         <input type="password" name="password" class="form-control" placeholder="Entrez votre mot de passe" required>
                     </div>
                 </div>
                 <p class="message text-center">Déjà un compte ? <a href="login.php">Se connecter</a></p>
                 <div class="form-group">
-                    <div class="col-sm-6 col-sm-offset-3 col-md-4 col-md-offset-4">
+                    <div class="d-grid">
                         <button type="submit" class="btn btn-default btn-primary"><span class="glyphicon glyphicon-log-in"></span> S'inscrire</button>
                     </div>
                 </div>
             </form>
         </div>
-
-        <?php require_once "includes/footer.php"; ?>
     </div>
-
+    <?php require_once "includes/footer.php"; ?>
     <?php require_once "includes/scripts.php"; ?>
 </body>
 
