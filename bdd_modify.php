@@ -25,23 +25,21 @@ if (isUserConnected()) {
             redirect("content_modify.php");
         }
         $_SESSION['histId']=$histId;
-    }
-    
-}
-    ?>
+    }  
+}?>
 
-  <!doctype html>
-  <html>
+<!doctype html>
+<html>
 
-  <?php
-    $pageTitle = "Modification d'une histoire";
-    require_once "includes/head.php";
-    ?>
+<?php
+$pageTitle = "Modification d'une histoire";
+require_once "includes/head.php";
+?>
 
-    <body>
-        <?php require_once "includes/header.php"; ?>
+<body>
+    <?php require_once "includes/header.php"; ?>
+    <div class="container">
         <h2 class="text-center">Modification d'une histoire</h2>
-        <div class="container">
             <div class="well">
                 <form class="form-horizontal" role="form" enctype="multipart/form-data" action="bdd_modify.php" method="post">
                     <div class="form-group">
@@ -62,18 +60,18 @@ if (isUserConnected()) {
                                 <option>Contenu</option>
                             </select>
                     </div>
+                    </br></br>
                     <div class="form-group">
-                        <div class="col-sm-4 col-sm-offset-4">
-                            <button type="submit" class="btn btn-default btn-primary"><span class="glyphicon glyphicon-save"></span> Enregistrer</button>
+                        <div class="d-grid gap-2">
+                            <button type="submit" class="btn btn-default btn-primary mx-auto"><span class="glyphicon glyphicon-save"></span> Enregistrer</button>
                         </div>
                     </div>
                 </form>
-          </div>
+            </div>
+    </div>
+</br></br>
+<?php require_once "includes/footer.php"; ?>
+<?php require_once "includes/scripts.php"; ?>
+</body>
 
-          <?php require_once "includes/footer.php"; ?>
-      </div>
-
-      <?php require_once "includes/scripts.php"; ?>
-    </body>
-
-  </html>
+</html>
